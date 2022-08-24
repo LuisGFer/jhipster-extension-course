@@ -60,7 +60,7 @@
           <td>{{ song.inclusionDate | formatMediumDate }}</td>
           <td>
             <div *ngIf="song.album">
-              <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album?.title }}</a>
+              <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album.title }}</a>
             </div>
           </td>
           <td class="text-end">

@@ -30,13 +30,13 @@
         <dt><span jhiTranslate="learnjhipsterApp.album.artist">Artist</span></dt>
         <dd>
           <div *ngIf="album.artist">
-            <a [routerLink]="['/artist', album.artist.id, 'view']">{{ album.artist?.name }}</a>
+            <a [routerLink]="['/artist', album.artist.id, 'view']">{{ album.artist.name }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="learnjhipsterApp.album.style">Style</span></dt>
         <dd>
           <div *ngIf="album.style">
-            <a [routerLink]="['/style', album.style.id, 'view']">{{ album.style?.name }}</a>
+            <a [routerLink]="['/style', album.style.id, 'view']">{{ album.style.name }}</a>
           </div>
         </dd>
       </dl>

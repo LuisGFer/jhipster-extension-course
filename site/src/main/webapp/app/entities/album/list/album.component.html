@@ -64,12 +64,12 @@
           </td>
           <td>
             <div *ngIf="album.artist">
-              <a [routerLink]="['/artist', album.artist.id, 'view']">{{ album.artist?.name }}</a>
+              <a [routerLink]="['/artist', album.artist.id, 'view']">{{ album.artist.name }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="album.style">
-              <a [routerLink]="['/style', album.style.id, 'view']">{{ album.style?.name }}</a>
+              <a [routerLink]="['/style', album.style.id, 'view']">{{ album.style.name }}</a>
             </div>
           </td>
           <td class="text-end">
