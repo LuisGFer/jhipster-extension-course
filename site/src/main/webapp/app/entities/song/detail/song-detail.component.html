@@ -29,7 +29,7 @@
         <dt><span jhiTranslate="learnjhipsterApp.song.album">Album</span></dt>
         <dd>
           <div *ngIf="song.album">
-            <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album?.title }}</a>
+            <a [routerLink]="['/album', song.album.id, 'view']">{{ song.album.title }}</a>
           </div>
         </dd>
       </dl>
