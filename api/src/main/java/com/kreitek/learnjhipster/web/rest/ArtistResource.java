@@ -1,6 +1,7 @@
 package com.kreitek.learnjhipster.web.rest;
 
 import com.kreitek.learnjhipster.repository.ArtistRepository;
+import com.kreitek.learnjhipster.security.AuthoritiesConstants;
 import com.kreitek.learnjhipster.service.ArtistQueryService;
 import com.kreitek.learnjhipster.service.ArtistService;
 import com.kreitek.learnjhipster.service.criteria.ArtistCriteria;
@@ -11,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
