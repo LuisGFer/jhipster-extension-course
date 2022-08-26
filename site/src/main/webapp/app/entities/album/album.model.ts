@@ -1,5 +1,5 @@
-import { IArtist } from 'app/entities/artist/artist.model';
-import { IStyle } from 'app/entities/style/style.model';
+import { IArtist } from '../../entities/artist/artist.model';
+import { IStyle } from '../../entities/style/style.model';
 
 export interface IAlbum {
   id: number;

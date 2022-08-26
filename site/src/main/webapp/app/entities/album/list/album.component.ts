@@ -6,12 +6,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IAlbum } from '../album.model';
 
-import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from '../../../config/pagination.constants';
+import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from '../../../config/navigation.constants';
 import { EntityArrayResponseType, AlbumService } from '../service/album.service';
 import { AlbumDeleteDialogComponent } from '../delete/album-delete-dialog.component';
-import { DataUtils } from 'app/core/util/data-util.service';
-import { FilterOptions, IFilterOptions } from 'app/shared/filter/filter.model';
+import { DataUtils } from '../../../core/util/data-util.service';
+import { FilterOptions, IFilterOptions } from '../../../shared/filter/filter.model';
 
 @Component({
   selector: 'jhi-album',

@@ -4,10 +4,10 @@ import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IStyle } from '../style.model';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from '../../../config/navigation.constants';
 import { EntityArrayResponseType, StyleService } from '../service/style.service';
 import { StyleDeleteDialogComponent } from '../delete/style-delete-dialog.component';
-import { SortService } from 'app/shared/sort/sort.service';
+import { SortService } from '../../../shared/sort/sort.service';
 
 @Component({
   selector: 'jhi-style',

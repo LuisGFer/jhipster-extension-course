@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { isPresent } from 'app/core/util/operators';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from '../../../core/util/operators';
+import { ApplicationConfigService } from '../../../core/config/application-config.service';
+import { createRequestOption } from '../../../core/request/request-util';
 import { IAlbum, NewAlbum } from '../album.model';
 
 export type PartialUpdateAlbum = Partial<IAlbum> & Pick<IAlbum, 'id'>;
