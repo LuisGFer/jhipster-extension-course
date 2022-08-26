@@ -2,6 +2,7 @@ package com.kreitek.learnjhipster.service;
 
 import com.kreitek.learnjhipster.domain.*; // for static metamodels
 import com.kreitek.learnjhipster.domain.Album;
+import com.kreitek.learnjhipster.domain.album.AlbumRestrictScopeService;
 import com.kreitek.learnjhipster.repository.AlbumRepository;
 import com.kreitek.learnjhipster.service.criteria.AlbumCriteria;
 import com.kreitek.learnjhipster.service.dto.AlbumDTO;
@@ -33,9 +34,12 @@ public class AlbumQueryService extends QueryService<Album> {
 
     private final AlbumMapper albumMapper;
 
-    public AlbumQueryService(AlbumRepository albumRepository, AlbumMapper albumMapper) {
+    private final AlbumRestrictScopeService albumRestrictScopeService;
+
+    public AlbumQueryService(AlbumRepository albumRepository, AlbumMapper albumMapper, AlbumRestrictScopeService albumRestrictScopeService) {
         this.albumRepository = albumRepository;
         this.albumMapper = albumMapper;
+        this.albumRestrictScopeService = albumRestrictScopeService;
     }
 
     /**
@@ -59,7 +63,10 @@ public class AlbumQueryService extends QueryService<Album> {
     @Transactional(readOnly = true)
     public Page<AlbumDTO> findByCriteria(AlbumCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria.toString().replaceAll("[\n\r\t]", "_"), page);
-        final Specification<Album> specification = createSpecification(criteria);
+
+        AlbumCriteria restrictedCriteria = this.albumRestrictScopeService.restrict(criteria);
+
+        final Specification<Album> specification = createSpecification(restrictedCriteria);
         return albumRepository.findAll(specification, page).map(albumMapper::toDto);
     }
 
