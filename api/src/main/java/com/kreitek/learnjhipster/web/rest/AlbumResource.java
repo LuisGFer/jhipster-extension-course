@@ -5,6 +5,7 @@ import com.kreitek.learnjhipster.service.AlbumQueryService;
 import com.kreitek.learnjhipster.service.AlbumService;
 import com.kreitek.learnjhipster.service.criteria.AlbumCriteria;
 import com.kreitek.learnjhipster.service.dto.AlbumDTO;
+import com.kreitek.learnjhipster.service.dto.AlbumSlimDTO;
 import com.kreitek.learnjhipster.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -150,14 +152,25 @@ public class AlbumResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of albums in body.
      */
     @GetMapping("/albums")
-    public ResponseEntity<List<AlbumDTO>> getAllAlbums(
+    public ResponseEntity<List<AlbumSlimDTO>> getAllAlbums(
         AlbumCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Albums by criteria: {}", criteria.toString().replaceAll("[\n\r\t]", "_"));
-        Page<AlbumDTO> page = albumQueryService.findByCriteria(criteria, pageable);
+        Page<AlbumSlimDTO> page = albumQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping(value = "/album/{albumId}/cover", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getAlbumCover(@PathVariable Long albumId){
+        Optional<AlbumDTO> albumDTO = this.albumService.findOne(albumId);
+
+        if (albumDTO.isPresent()) {
+            return albumDTO.get().getCover();
+        } else {
+            throw new BadRequestAlertException("Album id not found", null, null);
+        }
     }
 
     /**

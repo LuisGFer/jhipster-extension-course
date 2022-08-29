@@ -34,9 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">   
-          <th scope="col" jhiSortBy="image">
-            <span jhiTranslate="learnjhipsterApp.artist.image">Image</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+
           <th scope="col" jhiSortBy="name">
             <span jhiTranslate="learnjhipsterApp.artist.name">Name</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -46,11 +44,6 @@
       <tbody>
         <tr *ngFor="let artist of artists; trackBy: trackId" data-cy="entityTable">
 
-          <td>
-            <a *ngIf="artist.image" (click)="openFile(artist.image, artist.imageContentType)">
-              <img [src]="'data:' + artist.imageContentType + ';base64,' + artist.image" style="max-height: 30px" alt="artist image" />
-            </a>
-          </td>
           <td>{{ artist.name }}</td>
           <td class="text-end">
             <div class="btn-group">

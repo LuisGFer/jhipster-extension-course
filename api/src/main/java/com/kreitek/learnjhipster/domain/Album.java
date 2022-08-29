@@ -10,6 +10,13 @@ import javax.validation.constraints.*;
 /**
  * A Album.
  */
+@NamedEntityGraph(
+    name = "album-entity-graph",
+    attributeNodes = {
+        @NamedAttributeNode("artist"),
+        @NamedAttributeNode("style")
+    }
+)
 @Entity
 @Table(name = "album")
 public class Album implements Serializable {

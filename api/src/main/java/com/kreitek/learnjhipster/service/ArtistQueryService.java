@@ -5,6 +5,7 @@ import com.kreitek.learnjhipster.domain.Artist;
 import com.kreitek.learnjhipster.repository.ArtistRepository;
 import com.kreitek.learnjhipster.service.criteria.ArtistCriteria;
 import com.kreitek.learnjhipster.service.dto.ArtistDTO;
+import com.kreitek.learnjhipster.service.dto.ArtistSlimDTO;
 import com.kreitek.learnjhipster.service.mapper.ArtistMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
@@ -57,10 +58,10 @@ public class ArtistQueryService extends QueryService<Artist> {
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<ArtistDTO> findByCriteria(ArtistCriteria criteria, Pageable page) {
+    public Page<ArtistSlimDTO> findByCriteria(ArtistCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria.toString().replaceAll("[\n\r\t]", "_"), page);
         final Specification<Artist> specification = createSpecification(criteria);
-        return artistRepository.findAll(specification, page).map(artistMapper::toDto);
+        return artistRepository.getAllArtistSlim(specification, page);
     }
 
     /**
