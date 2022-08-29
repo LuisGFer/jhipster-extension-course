@@ -6,6 +6,7 @@ import com.kreitek.learnjhipster.service.ArtistQueryService;
 import com.kreitek.learnjhipster.service.ArtistService;
 import com.kreitek.learnjhipster.service.criteria.ArtistCriteria;
 import com.kreitek.learnjhipster.service.dto.ArtistDTO;
+import com.kreitek.learnjhipster.service.dto.ArtistSlimDTO;
 import com.kreitek.learnjhipster.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -153,12 +154,12 @@ public class ArtistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of artists in body.
      */
     @GetMapping("/artists")
-    public ResponseEntity<List<ArtistDTO>> getAllArtists(
+    public ResponseEntity<List<ArtistSlimDTO>> getAllArtists(
         ArtistCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Artists by criteria: {}", criteria.toString().replaceAll("[\n\r\t]", "_"));
-        Page<ArtistDTO> page = artistQueryService.findByCriteria(criteria, pageable);
+        Page<ArtistSlimDTO> page = artistQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
