@@ -12,6 +12,7 @@ import { EntityArrayResponseType, ArtistService } from '../service/artist.servic
 import { ArtistDeleteDialogComponent } from '../delete/artist-delete-dialog.component';
 import { DataUtils } from '../../../core/util/data-util.service';
 import { FilterOptions, IFilterOptions } from '../../../shared/filter/filter.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'jhi-artist',
@@ -29,12 +30,15 @@ export class ArtistComponent implements OnInit {
   totalItems = 0;
   page = 1;
 
+  filtersGroup: FormGroup = this.createFilterForm();
+
   constructor(
     protected artistService: ArtistService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected fb: FormBuilder
   ) {}
 
   trackId = (_index: number, item: IArtist): number => this.artistService.getArtistIdentifier(item);
@@ -96,7 +100,10 @@ export class ArtistComponent implements OnInit {
     const sort = (params.get(SORT) ?? data[DEFAULT_SORT_DATA]).split(',');
     this.predicate = sort[0];
     this.ascending = sort[1] === ASC;
-    this.filters.initializeFromParams(params);
+
+    if(!this.filters.hasAnyFilterSet()) {
+      this.filters.initializeFromParams(params);
+    }
   }
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
@@ -159,5 +166,31 @@ export class ArtistComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+  protected filter(): void {
+    this.filters = new FilterOptions();
+    if (this.filtersGroup.get(['filter_name'])?.value) {
+      this.filters.addFilter('name', 'contains', this.filtersGroup.get(['filter_name'])?.value);
+    }
+    this.load();
+  }
+
+  protected resetFilters(): void {
+    this.filters = new FilterOptions();
+    this.filtersGroup.reset();
+    this.load();
+  }
+
+  protected collapseFilters(): void {
+    //ToDo
+  }
+
+  private createFilterForm(): FormGroup {
+    const newFilterGroup: FormGroup = this.fb.group({
+      filter_name: ['',]
+    })
+
+    return newFilterGroup;
   }
 }

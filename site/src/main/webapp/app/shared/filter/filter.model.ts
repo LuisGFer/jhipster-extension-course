@@ -9,6 +9,8 @@ export interface IFilterOptions {
   initializeFromParams(params: ParamMap): boolean;
   equals(other: IFilterOptions): boolean;
   clone(): IFilterOptions;
+  addFilter(attribute: string, comparisonType: string, value: string): void;
+  
 }
 
 export interface IFilterOption {
@@ -48,6 +50,11 @@ export class FilterOptions implements IFilterOptions {
 
   add(option: IFilterOption): void {
     this.filterOptions.push(option);
+  }
+
+  addFilter(attribute: string, comparisonType: string, value: string): void {
+    const newFilterOption: IFilterOption = new FilterOption((attribute + '.' + comparisonType), value);
+    this.add(newFilterOption);
   }
 
   removeByName(name: string): void {
