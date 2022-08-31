@@ -1,10 +1,11 @@
 package com.kreitek.learnjhipster.web.rest;
 
 import com.kreitek.learnjhipster.repository.ArtistRepository;
-import com.kreitek.learnjhipster.security.AuthoritiesConstants;
 import com.kreitek.learnjhipster.service.ArtistQueryService;
 import com.kreitek.learnjhipster.service.ArtistService;
+import com.kreitek.learnjhipster.service.ArtistSlimQueryService;
 import com.kreitek.learnjhipster.service.criteria.ArtistCriteria;
+import com.kreitek.learnjhipster.service.criteria.ArtistSlimCriteria;
 import com.kreitek.learnjhipster.service.dto.ArtistDTO;
 import com.kreitek.learnjhipster.service.dto.ArtistSlimDTO;
 import com.kreitek.learnjhipster.web.rest.errors.BadRequestAlertException;
@@ -13,7 +14,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -23,7 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -50,10 +49,13 @@ public class ArtistResource {
 
     private final ArtistQueryService artistQueryService;
 
-    public ArtistResource(ArtistService artistService, ArtistRepository artistRepository, ArtistQueryService artistQueryService) {
+    private final ArtistSlimQueryService artistSlimQueryService;
+
+    public ArtistResource(ArtistService artistService, ArtistRepository artistRepository, ArtistQueryService artistQueryService, ArtistSlimQueryService artistSlimQueryService) {
         this.artistService = artistService;
         this.artistRepository = artistRepository;
         this.artistQueryService = artistQueryService;
+        this.artistSlimQueryService = artistSlimQueryService;
     }
 
     /**
@@ -155,11 +157,11 @@ public class ArtistResource {
      */
     @GetMapping("/artists")
     public ResponseEntity<List<ArtistSlimDTO>> getAllArtists(
-        ArtistCriteria criteria,
+        ArtistSlimCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Artists by criteria: {}", criteria.toString().replaceAll("[\n\r\t]", "_"));
-        Page<ArtistSlimDTO> page = artistQueryService.findByCriteria(criteria, pageable);
+        Page<ArtistSlimDTO> page = artistSlimQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
