@@ -6,11 +6,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ISong } from '../song.model';
 
-import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from '../../../config/pagination.constants';
+import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from '../../../config/navigation.constants';
 import { EntityArrayResponseType, SongService } from '../service/song.service';
 import { SongDeleteDialogComponent } from '../delete/song-delete-dialog.component';
-import { FilterOptions, IFilterOptions } from 'app/shared/filter/filter.model';
+import { FilterOptions, IFilterOptions } from '../../../shared/filter/filter.model';
 
 @Component({
   selector: 'jhi-song',
