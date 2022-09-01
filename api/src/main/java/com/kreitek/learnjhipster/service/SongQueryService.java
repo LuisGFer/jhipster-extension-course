@@ -2,12 +2,14 @@ package com.kreitek.learnjhipster.service;
 
 import com.kreitek.learnjhipster.domain.*; // for static metamodels
 import com.kreitek.learnjhipster.domain.Song;
+import com.kreitek.learnjhipster.domain.song.SongCheckerFilterByAlbumAppliedGuard;
 import com.kreitek.learnjhipster.repository.SongRepository;
 import com.kreitek.learnjhipster.service.criteria.SongCriteria;
 import com.kreitek.learnjhipster.service.dto.SongDTO;
 import com.kreitek.learnjhipster.service.mapper.SongMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,10 +34,12 @@ public class SongQueryService extends QueryService<Song> {
     private final SongRepository songRepository;
 
     private final SongMapper songMapper;
+    private final SongCheckerFilterByAlbumAppliedGuard songCheckerFilterByAlbumAppliedGuard;
 
-    public SongQueryService(SongRepository songRepository, SongMapper songMapper) {
+    public SongQueryService(SongRepository songRepository, SongMapper songMapper, SongCheckerFilterByAlbumAppliedGuard songCheckerFilterByAlbumAppliedGuard) {
         this.songRepository = songRepository;
         this.songMapper = songMapper;
+        this.songCheckerFilterByAlbumAppliedGuard = songCheckerFilterByAlbumAppliedGuard;
     }
 
     /**
@@ -59,6 +63,7 @@ public class SongQueryService extends QueryService<Song> {
     @Transactional(readOnly = true)
     public Page<SongDTO> findByCriteria(SongCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria.toString().replaceAll("[\n\r\t]", "_"), page);
+        this.songCheckerFilterByAlbumAppliedGuard.check(criteria);
         final Specification<Song> specification = createSpecification(criteria);
         return songRepository.findAll(specification, page).map(songMapper::toDto);
     }

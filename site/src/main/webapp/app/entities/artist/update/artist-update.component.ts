@@ -7,9 +7,9 @@ import { finalize } from 'rxjs/operators';
 import { ArtistFormService, ArtistFormGroup } from './artist-form.service';
 import { IArtist } from '../artist.model';
 import { ArtistService } from '../service/artist.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { AlertError } from '../../../shared/alert/alert-error.model';
+import { EventManager, EventWithContent } from '../../../core/util/event-manager.service';
+import { DataUtils, FileLoadError } from '../../../core/util/data-util.service';
 
 @Component({
   selector: 'jhi-artist-update',
