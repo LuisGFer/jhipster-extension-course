@@ -7,17 +7,18 @@ import { finalize, map } from 'rxjs/operators';
 import { AlbumFormService, AlbumFormGroup } from './album-form.service';
 import { IAlbum } from '../album.model';
 import { AlbumService } from '../service/album.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IArtist } from 'app/entities/artist/artist.model';
-import { ArtistService } from 'app/entities/artist/service/artist.service';
-import { IStyle } from 'app/entities/style/style.model';
-import { StyleService } from 'app/entities/style/service/style.service';
+import { AlertError } from '../../../shared/alert/alert-error.model';
+import { EventManager, EventWithContent } from '../../../core/util/event-manager.service';
+import { DataUtils, FileLoadError } from '../../../core/util/data-util.service';
+import { IArtist } from '../../../entities/artist/artist.model';
+import { ArtistService } from '../../../entities/artist/service/artist.service';
+import { IStyle } from '../../../entities/style/style.model';
+import { StyleService } from '../../../entities/style/service/style.service';
 
 @Component({
   selector: 'jhi-album-update',
   templateUrl: './album-update.component.html',
+  styleUrls: ['./album-update.component.scss']
 })
 export class AlbumUpdateComponent implements OnInit {
   isSaving = false;
