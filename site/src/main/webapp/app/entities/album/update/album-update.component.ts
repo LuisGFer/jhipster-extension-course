@@ -122,8 +122,13 @@ export class AlbumUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+
+    const queryArtistObject: any =  {
+      sort: ['name,asc']
+    }
+
     this.artistService
-      .query()
+      .query(queryArtistObject)
       .pipe(map((res: HttpResponse<IArtist[]>) => res.body ?? []))
       .pipe(map((artists: IArtist[]) => this.artistService.addArtistToCollectionIfMissing<IArtist>(artists, this.album?.artist)))
       .subscribe((artists: IArtist[]) => (this.artistsSharedCollection = artists));
@@ -132,6 +137,9 @@ export class AlbumUpdateComponent implements OnInit {
       .query()
       .pipe(map((res: HttpResponse<IStyle[]>) => res.body ?? []))
       .pipe(map((styles: IStyle[]) => this.styleService.addStyleToCollectionIfMissing<IStyle>(styles, this.album?.style)))
-      .subscribe((styles: IStyle[]) => (this.stylesSharedCollection = styles));
+      .subscribe((styles: IStyle[]) => {
+        this.stylesSharedCollection = styles.sort((styleA,styleB) => (styleA.name! > styleB.name!) ? 1 : ((styleB.name! > styleA.name!) ? -1 : 0));
+        }
+      );
   }
 }
