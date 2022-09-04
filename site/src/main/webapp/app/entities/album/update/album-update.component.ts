@@ -123,15 +123,7 @@ export class AlbumUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
 
-    const queryArtistObject: any =  {
-      sort: ['name,asc']
-    }
-
-    this.artistService
-      .query(queryArtistObject)
-      .pipe(map((res: HttpResponse<IArtist[]>) => res.body ?? []))
-      .pipe(map((artists: IArtist[]) => this.artistService.addArtistToCollectionIfMissing<IArtist>(artists, this.album?.artist)))
-      .subscribe((artists: IArtist[]) => (this.artistsSharedCollection = artists));
+    // this.searchArtists();
 
     this.styleService
       .query()
@@ -141,5 +133,26 @@ export class AlbumUpdateComponent implements OnInit {
         this.stylesSharedCollection = styles.sort((styleA,styleB) => (styleA.name! > styleB.name!) ? 1 : ((styleB.name! > styleA.name!) ? -1 : 0));
         }
       );
+  }
+
+  protected filterArtistsByName(event: any): void {
+    const conditionArtistName = String(event.query)
+    this.searchArtists(conditionArtistName);
+  }
+
+  private searchArtists(artistName?: string): void {
+    const queryArtistObject: any =  {
+      sort: ['name,asc']
+    }
+
+    if (artistName) {
+      queryArtistObject["name.contains"] = artistName;
+    }
+
+    this.artistService
+      .query(queryArtistObject)
+      .pipe(map((res: HttpResponse<IArtist[]>) => res.body ?? []))
+      .pipe(map((artists: IArtist[]) => this.artistService.addArtistToCollectionIfMissing<IArtist>(artists, this.album?.artist)))
+      .subscribe((artists: IArtist[]) => (this.artistsSharedCollection = artists));
   }
 }
