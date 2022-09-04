@@ -26,17 +26,17 @@
             <!-- ARTIST -->
             <div class="form-group col-12 col-md-4">
               <label class="form-label" jhiTranslate="learnjhipsterApp.album.artist" for="field_artist">Artist</label>
-              <select
-                class="form-control"
-                id="field_artist"
-                data-cy="artist"
-                name="artist"
-                formControlName="artist"
-                [compareWith]="compareArtist"
+
+              <p-autoComplete formControlName="artist" 
+                [suggestions]="artistsSharedCollection" 
+                (completeMethod)="filterArtistsByName($event)"
+                field="name"
+                [minLength]=3 
+                [delay]=400
               >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="artistOption" *ngFor="let artistOption of artistsSharedCollection">{{ artistOption.name }}</option>
-              </select>
+
+              </p-autoComplete>
+
             </div>
     
             <!-- TITLE -->

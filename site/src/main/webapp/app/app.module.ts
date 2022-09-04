@@ -3,22 +3,23 @@ import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import locale from '@angular/common/locales/es';
 import { BrowserModule, Title } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import dayjs from 'dayjs/esm';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { ApplicationConfigService } from './core/config/application-config.service';
 import './config/dayjs';
-import { SharedModule } from 'app/shared/shared.module';
-import { TranslationModule } from 'app/shared/language/translation.module';
+import { SharedModule } from './shared/shared.module';
+import { TranslationModule } from './shared/language/translation.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { fontAwesomeIcons } from './config/font-awesome-icons';
-import { httpInterceptorProviders } from 'app/core/interceptor/index';
+import { httpInterceptorProviders } from './core/interceptor/index';
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
@@ -29,6 +30,7 @@ import { ErrorComponent } from './layouts/error/error.component';
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     HomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
